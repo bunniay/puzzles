@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 public class GridController : MonoBehaviour
 {
     public TileBase blockTile;
-
+    
     // singleton instance
     public static GridController instance;
 
@@ -53,6 +53,7 @@ public class GridController : MonoBehaviour
 
         return tile.name;
     }
+
 
 
     public void PushBlock(Vector3Int start, Vector3Int end, int xmove, int ymove)
