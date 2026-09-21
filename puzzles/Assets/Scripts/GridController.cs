@@ -1,17 +1,20 @@
-using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine;
+
 
 // singleton: a class that you can call from anywhere
 public class GridController : MonoBehaviour
 {
+    public int numGoalsInScene;
     public TileBase blockTile;
-    
+
     // singleton instance
     public static GridController instance;
 
 
     private Grid grid;
     private Tilemap tilemap;
+    private Tilemap specialTilemap;
 
     private void Awake()
     {
@@ -34,6 +37,7 @@ public class GridController : MonoBehaviour
 
         // NOTE: make sure "Interactables" equals the name of the GameObject that contains your obstacles tilemap
         tilemap = transform.Find("Interactables").GetComponent<Tilemap>();
+        specialTilemap = transform.Find("Goals").GetComponent<Tilemap>();
     }
 
 
@@ -54,6 +58,17 @@ public class GridController : MonoBehaviour
         return tile.name;
     }
 
+
+    public bool IsGoal(int x, int y)
+    {
+        TileBase tile = specialTilemap.GetTile(new Vector3Int(x, y, 0));
+        if (tile == null)
+        {
+            return false;
+        }
+
+        return tile.name == "Goal";
+    }
 
 
     public void PushBlock(Vector3Int start, Vector3Int end, int xmove, int ymove)
