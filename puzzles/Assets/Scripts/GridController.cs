@@ -1,11 +1,9 @@
-using UnityEngine.Tilemaps;
 using UnityEngine;
-
+using UnityEngine.Tilemaps;
 
 // singleton: a class that you can call from anywhere
 public class GridController : MonoBehaviour
 {
-    public int numGoalsInScene;
     public TileBase blockTile;
 
     // singleton instance
@@ -14,7 +12,6 @@ public class GridController : MonoBehaviour
 
     private Grid grid;
     private Tilemap tilemap;
-    private Tilemap specialTilemap;
 
     private void Awake()
     {
@@ -37,7 +34,6 @@ public class GridController : MonoBehaviour
 
         // NOTE: make sure "Interactables" equals the name of the GameObject that contains your obstacles tilemap
         tilemap = transform.Find("Interactables").GetComponent<Tilemap>();
-        specialTilemap = transform.Find("Goals").GetComponent<Tilemap>();
     }
 
 
@@ -59,34 +55,12 @@ public class GridController : MonoBehaviour
     }
 
 
-    public bool IsGoal(int x, int y)
+    public void PushBlock(Vector3Int blockStart, Vector3Int blockEnd)
     {
-        TileBase tile = specialTilemap.GetTile(new Vector3Int(x, y, 0));
-        if (tile == null)
-        {
-            return false;
-        }
-
-        return tile.name == "Goal";
-    }
-
-
-    public void PushBlock(Vector3Int start, Vector3Int end, int xmove, int ymove)
-    {
-        // if there's a block ahead of us...push it!
-        if (GetTile(end.x, end.y) == "Box")
-        {
-            // calculate the block in front of us's start and end pos
-            Vector3Int blockStart = end;
-            Vector3Int blockEnd = blockStart + new Vector3Int(xmove, ymove, 0);
-            // and push it!
-            PushBlock(blockStart, blockEnd, xmove, ymove);
-        }
-
         // erase where the block currently is
-        tilemap.SetTile(start, null);
+        tilemap.SetTile(blockStart, null);
         // draw a box where it ends up
-        tilemap.SetTile(end, blockTile);
+        tilemap.SetTile(blockEnd, blockTile);
     }
 
 
