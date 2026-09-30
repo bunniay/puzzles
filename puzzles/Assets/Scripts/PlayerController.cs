@@ -51,17 +51,7 @@ public class PlayerController : MonoBehaviour
             if (GridController.instance.CanPushBlock(blockStart, blockEnd))
             {
                 // if so, push!
-                GridController.instance.PushBlock(blockStart, blockEnd, xmove, ymove);
-
-                // did we push it onto a goal?
-                if (GridController.instance.IsGoal(blockEnd.x, blockEnd.y))
-                {
-                    // we got a goal!!!!!!!
-                }
-                if (GridController.instance.IsGoal(blockStart.x, blockStart.y))
-                {
-                    // we just moved off a goal.....
-                }
+                GridController.instance.PushBlock(blockStart, blockEnd);
 
                 // and move :)
                 x = targetx;
